@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-
+    "prepare": "husky install"
   },
   "private": true,
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "@commitlint/config-nx-scopes": "^17.4.2",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@nrwl/cypress": "^15.6.3",
@@ -39,8 +42,10 @@
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.11",
     "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "^8.0.0",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
+    "lint-staged": "^13.1.0",
     "nx": "15.6.3",
     "prettier": "^2.6.2",
     "react-refresh": "^0.10.0",
