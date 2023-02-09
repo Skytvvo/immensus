@@ -9,7 +9,11 @@
     "client:test": "nx run client:test",
     "client:lint": "nx run client:lint --fix",
     "client:storybook": "nx run client:storybook",
-    "client:build-storybook": "nx run client:build-storybook"
+    "client:build-storybook": "nx run client:build-storybook",
+    "server:dev": "nx run server:serve",
+    "server:build": "nx run server:build",
+    "server:lint": "nx run server:lint --fix",
+    "server:test": "nx run server:test"
   },
   "private": true,
   "devDependencies": {
@@ -51,6 +55,7 @@
     "babel-loader": "8.1.0",
     "cypress": "^12.2.0",
     "eslint": "~8.15.0",
+    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "2.26.0",
@@ -64,6 +69,7 @@
     "lint-staged": "^13.1.0",
     "nx": "15.6.3",
     "prettier": "^2.6.2",
+    "prisma": "^4.9.0",
     "react-refresh": "^0.10.0",
     "react-test-renderer": "18.2.0",
     "ts-jest": "28.0.5",
