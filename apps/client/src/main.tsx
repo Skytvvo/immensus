@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from './store';
 import { Provider } from 'react-redux';
 import { Auth0Provider } from '@auth0/auth0-react';
+import { store } from './store';
 
 import App from './app/app';
 
