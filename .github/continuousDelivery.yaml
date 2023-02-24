@@ -1,0 +1,55 @@
+name: Continues Delivery
+on: push
+jobs:
+  linting-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v3
+      - name: Node.JS Installation
+        uses: actions/setup-node@v3
+      - name: Caching
+        uses: actions/cache@v3
+      - name: Packages installation
+        run: npm ci
+      - name: Lint client side
+        run: npm run client:lint
+  linting-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v3
+      - name: Node.JS Installation
+        uses: actions/setup-node@v3
+      - name: Caching
+        uses: actions/cache@v3
+      - name: Packages installation
+        run: npm ci
+      - name: Lint server side
+        run: npm run server:lint
+  testing-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v3
+      - name: Node.JS Installation
+        uses: actions/setup-node@v3
+      - name: Caching
+        uses: actions/cache@v3
+      - name: Packages installation
+        run: npm ci
+      - name: Lint server side
+        run: npm run client:test
+  testing-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the repository code
+        uses: actions/checkout@v3
+      - name: Node.JS Installation
+        uses: actions/setup-node@v3
+      - name: Caching
+        uses: actions/cache@v3
+      - name: Packages installation
+        run: npm ci
+      - name: Lint server side
+        run: npm run server:test
