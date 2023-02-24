@@ -10,6 +10,9 @@ jobs:
         uses: actions/setup-node@v3
       - name: Caching
         uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
       - name: Packages installation
         run: npm ci
       - name: Lint client side
@@ -23,6 +26,9 @@ jobs:
         uses: actions/setup-node@v3
       - name: Caching
         uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
       - name: Packages installation
         run: npm ci
       - name: Lint server side
@@ -36,6 +42,9 @@ jobs:
         uses: actions/setup-node@v3
       - name: Caching
         uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
       - name: Packages installation
         run: npm ci
       - name: Lint server side
@@ -49,6 +58,9 @@ jobs:
         uses: actions/setup-node@v3
       - name: Caching
         uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
       - name: Packages installation
         run: npm ci
       - name: Lint server side
