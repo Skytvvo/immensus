@@ -13,10 +13,14 @@ jobs:
         with:
           path: ~/.npm
           key: ci-caching-${{ hashFiles('**/package-lock.json') }}
+      - uses: nrwl/nx-set-shas@v3
       - name: Packages installation
         run: npm ci
       - name: Lint client side
-        run: npm run client:lint
+      - run: npx nx affected --target=lint --parallel=3
+      - run: npx nx affected --target=test --parallel=3
+      - run: npx nx affected --target=storybook-build --parallel=3
+      - run: npx nx affected --target=build --parallel =3
   linting-server:
     runs-on: ubuntu-latest
     steps:
