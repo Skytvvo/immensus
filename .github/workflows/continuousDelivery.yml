@@ -20,11 +20,11 @@ jobs:
       - name: Linting
         run: npx nx affected --target=lint --parallel=3
       - name: Testing
-      - run: npx nx affected --target=test --parallel=3
+        run: npx nx affected --target=test --parallel=3
       - name: Building storybook
-      - run: npx nx affected --target=storybook-build --parallel=3
+        run: npx nx affected --target=storybook-build --parallel=3
       - name: Building client
-      - run: npx nx affected --target=build --parallel =3
+        run: npx nx affected --target=build --parallel =3
   linting-server:
     runs-on: ubuntu-latest
     steps:
