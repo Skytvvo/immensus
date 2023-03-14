@@ -3,9 +3,14 @@ on: push
 jobs:
   linting-client:
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
     steps:
       - name: Get the repository code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Node.JS Installation
         uses: actions/setup-node@v3
       - name: Caching
