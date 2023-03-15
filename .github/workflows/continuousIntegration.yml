@@ -1,8 +1,12 @@
 name: Continues Integration
 on:
   push:
+    branches:
+      - main
+  pull_request:
+  
 jobs:
-  linting-client:
+  client:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,51 +24,3 @@ jobs:
         run: npx nx affected --target=storybook-build --parallel=3
       - name: Building client
         run: npx nx affected --target=build --parallel =3
-  linting-server:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get the repository code
-        uses: actions/checkout@v3
-      - name: Node.JS Installation
-        uses: actions/setup-node@v3
-      - name: Caching
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
-      - name: Packages installation
-        run: npm ci
-      - name: Lint server side
-        run: npm run server:lint
-  testing-client:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get the repository code
-        uses: actions/checkout@v3
-      - name: Node.JS Installation
-        uses: actions/setup-node@v3
-      - name: Caching
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
-      - name: Packages installation
-        run: npm ci
-      - name: Lint server side
-        run: npm run client:test
-  testing-server:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get the repository code
-        uses: actions/checkout@v3
-      - name: Node.JS Installation
-        uses: actions/setup-node@v3
-      - name: Caching
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
-      - name: Packages installation
-        run: npm ci
-      - name: Lint server side
-        run: npm run server:test
