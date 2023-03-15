@@ -1,0 +1,51 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  client:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
+      - run: npm ci
+
+      - name: Linting
+        run: npx nx affected --target=client:lint --parallel=3
+      - name: Testing
+        run: npx nx affected --target=client:test --parallel=3
+      - name: Building storybook
+        run: npx nx affected --target=client:storybook-build --parallel=3
+      - name: Building client
+        run: npx nx affected --target=client:build --parallel=3
+
+  server:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
+      - run: npm ci
+
+      - name: Linting
+        run: npm run server:lint --parallel=3
+      - name: Testing
+        run: npx nx affected --target=server:test --parallel=3
+      - name: Building
+        run: npx nx affected --target=server:build --parallel =3
