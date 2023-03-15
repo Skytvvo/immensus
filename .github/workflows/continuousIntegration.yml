@@ -1,27 +1,21 @@
-name: Continues Delivery
-on: push
+name: Continues Integration
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  
 jobs:
   linting-client:
     runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      actions: 'read'
     steps:
-      - name: Get the repository code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Node.JS Installation
-        uses: actions/setup-node@v3
-      - name: Caching
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ci-caching-${{ hashFiles('**/package-lock.json') }}
-      - name: Usage of NX
-        uses: nrwl/nx-set-shas@v3
-      - name: Packages installation
-        run: npm ci
+      - uses: nrwl/nx-set-shas@v3
+      - run: npm ci
+      
+      - run: npx nx format:check
       - name: Linting
         run: npx nx affected --target=lint --parallel=3
       - name: Testing
