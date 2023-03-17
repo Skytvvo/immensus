@@ -107,6 +107,20 @@
           "quiet": true
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker build -f apps/client/Dockerfile -t skytvvo/immensus-client ."]
+      }
+    },
+    "docker-push": {
+      "dependsOn": ["docker-build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker push skytvvo/immensus-client"]
+      }
     }
   },
   "tags": []

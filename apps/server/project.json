@@ -55,6 +55,20 @@
           "codeCoverage": true
         }
       }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker build -f apps/server/Dockerfile -t skytvvo/immensus-service ."]
+      }
+    },
+    "docker-push": {
+      "dependsOn": ["docker-build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker push skytvvo/immensus-service"]
+      }
     }
   },
   "tags": []

@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  client:
+    image: skytvvo/immensus-client
+    env_file: .env
+    ports:
+      - '4200:4200'
+  server:
+    image: skytvvo/immensus-service
+    env_file: .env
+    ports:
+      - '4400:4400'
