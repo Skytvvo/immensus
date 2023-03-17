@@ -1,0 +1,142 @@
+name: CI/CD
+
+env:
+  is-merge: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+  is-pull-request: ${{ github.event_name == 'pull_request' }}
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
+      - name: Caching deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+
+      - name: 'PR: linting affected code only for all projects'
+        if: env.is-pull-request == 'true'
+        run: npm run lint:affected
+      - name: 'Merge: linting entire codebase for all projects'
+        if: env.is-merge == 'true'
+        run: npm run lint
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
+      - name: Caching deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+
+      - name: 'PR: testing affected code only for all projects'
+        if: env.is-pull-request == 'true'
+        run: npm run test:affected
+      - name: 'Merge: testing entire codebase for all projects'
+        if: env.is-merge == 'true'
+        run: npm run test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
+      - name: Caching deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+
+      - name: 'PR: build affected projects only'
+        if: env.is-pull-request == 'true'
+        run: npm run build:affected
+      - name: 'Merge: build all projects'
+        if: env.is-merge == 'true'
+        run: npm run build
+
+  deploy:
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      actions: 'read'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - uses: nrwl/nx-set-shas@v3
+        with:
+          main-branch-name: 'master'
+      - name: Caching deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node-modules-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build app
+        run: npm run build
+      - name: Build docker images
+        run: npm run build:docker
+      - name: Push docker images
+        run: npm run push:docker
+
+
