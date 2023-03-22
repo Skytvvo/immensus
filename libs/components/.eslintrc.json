@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "plugin:@nrwl/nx/react",
+    "prettier",
+    "airbnb",
+    "../../.eslintrc.json"
+  ],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": "off",
+        "import/no-import-module-exports": ["error", {
+          "exceptions": ["**/*/.storybook/main.ts"]
+        }],
+        "import/no-extraneous-dependencies": 1
+      }
+    }
+  ]
+}
