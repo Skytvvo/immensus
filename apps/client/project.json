@@ -94,20 +94,6 @@
         }
       }
     },
-    "build-storybook": {
-      "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputDir}"],
-      "options": {
-        "uiFramework": "@storybook/react",
-        "outputDir": "dist/storybook/client",
-        "configDir": "apps/client/.storybook"
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
     "docker-build": {
       "dependsOn": ["build"],
       "executor": "nx:run-commands",
