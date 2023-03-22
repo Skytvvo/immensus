@@ -96,7 +96,7 @@ jobs:
 
       - name: 'PR: build affected projects only'
         if: env.is-pull-request == 'true'
-        run: npm run build:affected
+        run: npm run build:affected && build
       - name: 'Merge: build all projects'
         if: env.is-merge == 'true'
         run: npm run build
