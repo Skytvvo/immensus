@@ -1,7 +1,7 @@
 name: CI/CD
 
 env:
-  is-merge: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+  is-merge: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
   is-pull-request: ${{ github.event_name == 'pull_request' }}
 
 on:
@@ -103,7 +103,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref_name == 'master'
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
