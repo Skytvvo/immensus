@@ -63,7 +63,7 @@
       "dependsOn": ["build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker build -f apps/server/Dockerfile -t skytvvo/immensus-authorization-service ."]
+        "commands": ["docker build -f apps/authorization-service/Dockerfile -t skytvvo/immensus-authorization-service ."]
       }
     },
     "docker-push": {
