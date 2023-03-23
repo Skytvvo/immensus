@@ -1,7 +1,7 @@
-FROM docker.io/node:lts-alpine
+FROM node:16
 WORKDIR /app
 
-COPY ./dist/apps/server ./dist/
+COPY ./dist/apps/authorization-service ./dist/
 COPY ./package*.json ./
 RUN npm ci
 

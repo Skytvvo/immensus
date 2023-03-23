@@ -1,10 +1,17 @@
 {
-  "extends": ["../../.eslintrc.json"],
+  "extends": [
+    "prettier",
+    "airbnb",
+    "../../.eslintrc.json"
+  ],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "class-methods-use-this": 0,
+        "no-useless-constructor": 0
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],
