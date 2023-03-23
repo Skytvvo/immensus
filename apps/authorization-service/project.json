@@ -1,37 +1,40 @@
 {
-  "name": "server",
+  "name": "authorization-service",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/server/src",
+  "sourceRoot": "apps/authorization-service/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/server",
-        "main": "apps/server/src/main.ts",
-        "tsConfig": "apps/server/tsconfig.app.json",
-        "assets": ["apps/server/src/assets"],
-        "webpackConfig": "apps/server/webpack.config.js"
+        "outputPath": "dist/apps/authorization-service",
+        "main": "apps/authorization-service/src/main.ts",
+        "tsConfig": "apps/authorization-service/tsconfig.app.json",
+        "assets": ["apps/authorization-service/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/authorization-service/webpack.config.js"
       },
       "configurations": {
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false
-        }
+        "development": {},
+        "production": {}
       }
     },
     "serve": {
       "executor": "@nrwl/js:node",
+      "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "server:build"
+        "buildTarget": "authorization-service:build"
       },
       "configurations": {
+        "development": {
+          "buildTarget": "authorization-service:build:development"
+        },
         "production": {
-          "buildTarget": "server:build:production"
+          "buildTarget": "authorization-service:build:production"
         }
       }
     },
@@ -39,14 +42,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/server/**/*.ts"]
+        "lintFilePatterns": ["apps/authorization-service/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/server/jest.config.ts",
+        "jestConfig": "apps/authorization-service/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -60,14 +63,14 @@
       "dependsOn": ["build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker build -f apps/server/Dockerfile -t skytvvo/immensus-service ."]
+        "commands": ["docker build -f apps/server/Dockerfile -t skytvvo/immensus-authorization-service ."]
       }
     },
     "docker-push": {
       "dependsOn": ["docker-build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker push skytvvo/immensus-service"]
+        "commands": ["docker push skytvvo/immensus-authorization-service"]
       }
     }
   },

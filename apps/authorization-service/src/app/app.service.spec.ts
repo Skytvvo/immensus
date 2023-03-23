@@ -14,8 +14,10 @@ describe('AppService', () => {
   });
 
   describe('getData', () => {
-    it('should return "Welcome to server!"', () => {
-      expect(service.getData()).toEqual({ message: 'Welcome to server!' });
+    it('should return "Welcome to authorization-service!"', () => {
+      expect(service.getData()).toEqual({
+        message: 'Welcome to authorization-service!',
+      });
     });
   });
 });
