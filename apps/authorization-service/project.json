@@ -35,6 +35,9 @@
         },
         "production": {
           "buildTarget": "authorization-service:build:production"
+        },
+        "repl": {
+          "buildTarget": "authorization-service:repl"
         }
       }
     },
@@ -71,6 +74,33 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["docker push skytvvo/immensus-authorization-service"]
+      }
+    },
+    "repl": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/authorization-service",
+        "main": "apps/authorization-service/src/repl.ts",
+        "tsConfig": "apps/authorization-service/tsconfig.app.json",
+        "assets": []
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/authorization-service/src/environments/environment.ts",
+              "with": "apps/authorization-service/src/environments/environment.prod.ts"
+            }
+          ]
+        }
       }
     }
   },
