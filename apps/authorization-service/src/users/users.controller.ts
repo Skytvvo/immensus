@@ -1,10 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete,
+  Body, Controller, Delete, Get, Param, Patch, Post,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ActiveUser } from '../iam/decorators/active-user.decorator';
+import { Roles } from '../iam/authorization/decorators/roles.decorator';
+import { RoleEnum } from './enums/role.enum';
 
 @Controller('users')
 export class UsersController {
@@ -20,16 +22,18 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Roles(RoleEnum.ADMIN)
+  @Patch('update/:id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+id, updateUserDto);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
-
+  @Roles(RoleEnum.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
