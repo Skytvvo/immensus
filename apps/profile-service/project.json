@@ -1,0 +1,78 @@
+{
+  "name": "profile-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/profile-service/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/profile-service",
+        "main": "apps/profile-service/src/main.ts",
+        "tsConfig": "apps/profile-service/tsconfig.app.json",
+        "assets": ["apps/profile-service/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/profile-service/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "profile-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "profile-service:build:development"
+        },
+        "production": {
+          "buildTarget": "profile-service:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/profile-service/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/profile-service/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker build -f apps/profile-service/Dockerfile -t skytvvo/immensus-profile-service ."]
+      }
+    },
+    "docker-push": {
+      "dependsOn": ["docker-build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["docker push skytvvo/immensus-profile-service"]
+      }
+    }
+  },
+  "tags": []
+}
