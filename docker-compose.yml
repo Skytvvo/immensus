@@ -10,6 +10,12 @@ services:
     env_file:
       - .env
     ports:
+      - '4400:4400'
+  gateway-service:
+    image: skytvvo/immensus-gateway-service
+    env_file:
+      - .env
+    ports:
       - '4401:4401'
   database:
     image: postgres

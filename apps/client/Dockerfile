@@ -1,4 +1,4 @@
-FROM docker.io/node:lts-alpine
+FROM node:16-alpine
 WORKDIR /app
 
 COPY ./dist/apps/client ./
