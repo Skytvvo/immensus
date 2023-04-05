@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package authentication;
+
+service AuthenticationService {
+  rpc SignUp (SignUpDto) returns (Undefined);
+}
+
+message SignUpDto{
+  string email = 1;
+  string password = 2;
+}
+
+message Undefined {}

@@ -1,6 +1,6 @@
 import {
-  Body,
-  ConflictException, HttpCode, HttpStatus, Inject, Injectable, Post, Res, UnauthorizedException,
+  ConflictException,
+  Inject, Injectable, UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -28,7 +28,6 @@ export class AuthenticationService {
       const user = new User();
       user.email = signUpDto.email;
       user.password = await this.hashingService.hash(signUpDto.password);
-
       await this.usersRepository.save(user);
     } catch (err) {
       throw new ConflictException();
