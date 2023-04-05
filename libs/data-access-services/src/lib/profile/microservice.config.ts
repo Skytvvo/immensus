@@ -8,7 +8,7 @@ const microserviceConfig: MicroserviceOptions ={
   transport: Transport.GRPC,
   options: {
     package: 'profile',
-    protoPath: join(__dirname, '../../../apps/profile-service/src/profile.proto'),
+    protoPath: join(__dirname, '../../../apps/profile-service/profile.proto'),
     url: `${HOST}:${PORT}`,
     loader: { keepCase: true, arrays: true, objects: true },
   },

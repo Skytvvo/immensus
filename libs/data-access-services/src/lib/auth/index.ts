@@ -1,1 +1,1 @@
-export { default as authConfig } from './config';
+export { default as authConfig } from './microservice.config';
