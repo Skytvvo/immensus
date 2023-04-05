@@ -1,0 +1,12 @@
+import "google/protobuf/empty.proto";
+syntax = "proto3";
+
+package profile;
+
+service ProfileService {
+  rpc GetData (google.protobuf.Empty) returns (getDataMessage);
+}
+
+message getDataMessage{
+  string message = 1;
+}
