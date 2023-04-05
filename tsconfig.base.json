@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@immensus/components": ["libs/components/src/index.ts"]
+      "@immensus/components": ["libs/components/src/index.ts"],
+      "@immensus/data-access-services": [
+        "libs/data-access-services/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

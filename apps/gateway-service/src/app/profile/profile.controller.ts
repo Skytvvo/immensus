@@ -1,18 +1,11 @@
 import { Controller, Get, OnModuleInit } from '@nestjs/common';
-import { Client, ClientGrpc, Transport } from '@nestjs/microservices';
-import { join } from 'path';
+import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
+import { profileConfig } from '@immensus/data-access-services';
 import { IProfileService } from './interfaces/profile.interface';
 
 @Controller('profile')
 export class ProfileController implements OnModuleInit {
-  @Client({
-    transport: Transport.GRPC,
-    options: {
-      package: 'profile',
-      protoPath: join(__dirname, '../../../apps/profile-service/src/profile.proto'),
-      url: 'localhost:4402',
-    },
-  })
+  @Client(profileConfig as ClientOptions)
   private client: ClientGrpc;
 
   private profileService: IProfileService;

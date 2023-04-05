@@ -2,20 +2,13 @@ import {
   Body, Controller, OnModuleInit, Post,
 } from '@nestjs/common';
 import { Client, ClientGrpc, Transport } from '@nestjs/microservices';
-import { join } from 'path';
+import { authConfig } from '@immensus/data-access-services';
 import { IAuthService } from './interfaces/auth.interface';
 import { SignUpDto } from './dto/sign-up.dto';
 
 @Controller('auth')
 export class AuthController implements OnModuleInit {
-  @Client({
-    transport: Transport.GRPC,
-    options: {
-      package: 'authentication',
-      protoPath: join(__dirname, '../../../apps/authorization-service/src/authentication.proto'),
-      url: 'localhost:4400',
-    },
-  })
+  @Client(authConfig)
   private client: ClientGrpc;
 
   private grpcService: IAuthService;
