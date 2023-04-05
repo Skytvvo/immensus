@@ -6,5 +6,5 @@ interface ISignUp{
 }
 
 export interface IAuthService{
-  signUp(data: ISignUp): Observable<any>
+  signUp(data: ISignUp): Observable<any>;
 }
