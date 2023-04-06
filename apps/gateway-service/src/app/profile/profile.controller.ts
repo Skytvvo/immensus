@@ -1,4 +1,4 @@
-import { Controller, Get, OnModuleInit } from '@nestjs/common';
+import { Controller, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import { profileConfig } from '@immensus/data-access-services';
 import { IProfileService } from './interfaces/profile.interface';
@@ -12,10 +12,5 @@ export class ProfileController implements OnModuleInit {
 
   onModuleInit() {
     this.profileService = this.client.getService<IProfileService>('ProfileService');
-  }
-
-  @Get()
-  async getAll() {
-    return this.profileService.getData({});
   }
 }

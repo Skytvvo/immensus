@@ -1,10 +1,12 @@
 import { Observable } from 'rxjs';
+import { SignInDto, SignUpDto } from '@immensus/data-access-services';
 
-interface ISignUp{
-  email: string;
-  password: string;
+interface ISignInResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface IAuthService{
-  signUp(data: ISignUp): Observable<any>;
+  signUp(data: SignUpDto): Observable<any>;
+  signIn(data: SignInDto): Observable<ISignInResponse>;
 }

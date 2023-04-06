@@ -6,12 +6,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { MicroserviceOptions } from '@nestjs/microservices';
-import { authConfig } from '@immensus/data-access-services';
-import { AppModule } from './app/app.module';
-
+import { iamConfig } from '@immensus/data-access-services';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, authConfig);
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, iamConfig);
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen();

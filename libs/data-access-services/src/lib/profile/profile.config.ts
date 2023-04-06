@@ -4,7 +4,7 @@ import { join } from 'path';
 const PORT = process.env.PORT_PROFILE_SERVICE || 4402;
 const HOST = process.env.HOST_PROFILE_SERVICE || 'localhost';
 
-const microserviceConfig: MicroserviceOptions ={
+const profileConfig: MicroserviceOptions ={
   transport: Transport.GRPC,
   options: {
     package: 'profile',
@@ -14,4 +14,4 @@ const microserviceConfig: MicroserviceOptions ={
   },
 };
 
-export default microserviceConfig;
+export default profileConfig;

@@ -6,12 +6,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
-import { User } from '../../users/entities/user.entity';
+import { ActiveUserData, User } from '@immensus/data-access-services';
 import { HashingService } from '../hashing/hashing.service';
-import { SignInDto } from './dto/sign-in.dto';
-import { SignUpDto } from './dto/sign-up.dto';
+import { SignInDto } from '../../../../../libs/data-access-services/src/lib/iam/dto/sign-in.dto';
+import { SignUpDto } from '../../../../../libs/data-access-services/src/lib/iam/dto/sign-up.dto';
 import jwtConfig from '../config/jwt.config';
-import { ActiveUserData } from '../interfaces/active-user-data.interface';
 
 @Injectable()
 export class AuthenticationService {

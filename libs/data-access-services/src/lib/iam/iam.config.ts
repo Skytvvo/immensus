@@ -4,7 +4,7 @@ import { join } from 'path';
 const PORT = process.env.PORT_AUTHORIZATION_SERVICE || 4400;
 const HOST = process.env.HOST_AUTHORIZATION_SERVICE || 'localhost';
 
-const microserviceConfig: MicroserviceOptions ={
+const iamConfig: MicroserviceOptions ={
   transport: Transport.GRPC,
   options: {
     package: 'authentication',
@@ -14,4 +14,4 @@ const microserviceConfig: MicroserviceOptions ={
   },
 };
 
-export default microserviceConfig;
+export default iamConfig;
