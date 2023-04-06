@@ -3,8 +3,9 @@ syntax = "proto3";
 package authentication;
 
 service AuthenticationService {
-  rpc SignUp (SignUpDto) returns (Undefined);
-  rpc signIn (SignInDto) returns (SignInResponse);
+  rpc signUp (SignUpDto) returns (Undefined);
+  rpc signIn (SignInDto) returns (TokensResponse);
+  rpc refreshTokens (RefreshingTokenDto) returns (TokensResponse);
 }
 
 message SignUpDto{
@@ -18,7 +19,11 @@ message SignInDto{
   string password = 2;
 }
 
-message SignInResponse {
+message RefreshingTokenDto {
+  string refreshingToken = 1;
+}
+
+message TokensResponse {
   string accessToken = 1;
   string refreshToken = 2;
 }
