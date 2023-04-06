@@ -1,7 +1,4 @@
-import {
-  Controller, Get, HttpCode, HttpStatus, Req, Res,
-} from '@nestjs/common';
-import { Response } from 'express';
+import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { SignInDto, SignUpDto } from '@immensus/data-access-services';
 import { AuthenticationService } from './authentication.service';
@@ -11,7 +8,7 @@ export class AuthenticationController {
   constructor(private readonly authService: AuthenticationService) {
   }
 
-  @GrpcMethod('AuthenticationService', 'SignUp')
+  @GrpcMethod('AuthenticationService', 'signUp')
   signUp(signUpDto: SignUpDto) {
     return this.authService.signUp(signUpDto);
   }
@@ -21,29 +18,8 @@ export class AuthenticationController {
     return this.authService.signIn(signInDto);
   }
 
-  @HttpCode(HttpStatus.OK)
-  @Get('refresh-tokens')
-  async refreshTokens(
-    @Res({ passthrough: true }) response: Response,
-    @Req() req,
-  ) {
-    const { refreshToken: refreshingToken } = req.cookies;
-
-    const {
-      accessToken,
-      refreshToken,
-    } = await this.authService.refreshTokens(refreshingToken);
-
-    response.cookie('accessToken', accessToken, {
-      secure: true,
-      httpOnly: true,
-      sameSite: true,
-    });
-
-    response.cookie('refreshToken', refreshToken, {
-      secure: true,
-      httpOnly: true,
-      sameSite: true,
-    });
+  @GrpcMethod('AuthenticationService', 'refreshTokens')
+  async refreshTokens(refreshingToken: string) {
+    return this.authService.refreshTokens(refreshingToken);
   }
 }

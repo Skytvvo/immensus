@@ -6,10 +6,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
-import { ActiveUserData, User } from '@immensus/data-access-services';
+import {
+  ActiveUserData, RefreshingTokenDto, SignInDto, SignUpDto, User,
+} from '@immensus/data-access-services';
 import { HashingService } from '../hashing/hashing.service';
-import { SignInDto } from '../../../../../libs/data-access-services/src/lib/iam/dto/sign-in.dto';
-import { SignUpDto } from '../../../../../libs/data-access-services/src/lib/iam/dto/sign-up.dto';
 import jwtConfig from '../config/jwt.config';
 
 @Injectable()
@@ -73,7 +73,7 @@ export class AuthenticationService {
   }
 
   async refreshTokens(
-    refreshingToken: string,
+    { refreshingToken }: RefreshingTokenDto,
   ) {
     try {
       const { sub } = await this.jwtService.verifyAsync<Pick<ActiveUserData, 'sub'>>(refreshingToken, {

@@ -1,5 +1,5 @@
 import {
-  Body, Controller, HttpCode, HttpStatus, OnModuleInit, Post, Res,
+  Body, Controller, Get, HttpCode, HttpStatus, OnModuleInit, Post, Req, Res,
 } from '@nestjs/common';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import {
@@ -32,7 +32,35 @@ export class AuthController implements OnModuleInit {
     @Res({ passthrough: true }) response: Response,
     @Body() signInDto: SignInDto,
   ) {
-    const { accessToken, refreshToken } = await this.iamService.signIn(signInDto).toPromise();
+    const {
+      accessToken,
+      refreshToken,
+    } = await this.iamService.signIn(signInDto).toPromise();
+    response.cookie('accessToken', accessToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+
+    response.cookie('refreshToken', refreshToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('refresh-tokens')
+  async refreshTokens(
+    @Res({ passthrough: true }) response: Response,
+    @Req() req,
+  ) {
+    const { refreshToken: refreshingToken } = req.cookies;
+    const {
+      accessToken,
+      refreshToken,
+    } = await this.iamService.refreshTokens({ refreshingToken }).toPromise();
+
     response.cookie('accessToken', accessToken, {
       secure: true,
       httpOnly: true,
