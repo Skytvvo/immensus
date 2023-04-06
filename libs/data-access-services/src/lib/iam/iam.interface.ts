@@ -1,4 +1,4 @@
-import { RoleEnum } from '../../users/enums/role.enum';
+import { RoleEnum } from "./iam.enum";
 
 export interface ActiveUserData{
   sub: number;

@@ -1,24 +1,48 @@
 import {
-  Body, Controller, OnModuleInit, Post,
+  Body, Controller, HttpCode, HttpStatus, OnModuleInit, Post, Res,
 } from '@nestjs/common';
-import { Client, ClientGrpc, Transport } from '@nestjs/microservices';
-import { authConfig } from '@immensus/data-access-services';
+import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
+import {
+  iamConfig, AuthType, SignInDto, SignUpDto,
+} from '@immensus/data-access-services';
+import { Response } from 'express';
 import { IAuthService } from './interfaces/auth.interface';
-import { SignUpDto } from './dto/sign-up.dto';
+import { Auth } from '../../decorators/auth.decorator';
 
+@Auth(AuthType.NONE)
 @Controller('auth')
 export class AuthController implements OnModuleInit {
-  @Client(authConfig)
+  @Client(iamConfig as ClientOptions)
   private client: ClientGrpc;
 
-  private grpcService: IAuthService;
+  private iamService: IAuthService;
 
   onModuleInit() {
-    this.grpcService = this.client.getService<IAuthService>('AuthenticationService');
+    this.iamService = this.client.getService<IAuthService>('AuthenticationService');
   }
 
   @Post('sign-up')
   async signUp(@Body() signUpDto: SignUpDto) {
-    return this.grpcService.signUp(signUpDto);
+    return this.iamService.signUp(signUpDto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('sign-in')
+  async signIn(
+    @Res({ passthrough: true }) response: Response,
+    @Body() signInDto: SignInDto,
+  ) {
+    const { accessToken, refreshToken } = await this.iamService.signIn(signInDto).toPromise();
+    response.cookie('accessToken', accessToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
+
+    response.cookie('refreshToken', refreshToken, {
+      secure: true,
+      httpOnly: true,
+      sameSite: true,
+    });
   }
 }

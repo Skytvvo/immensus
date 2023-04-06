@@ -1,1 +1,2 @@
-export { default as profileConfig } from './microservice.config';
+export { default as profileConfig } from './profile.config';
+export * from './entities';
