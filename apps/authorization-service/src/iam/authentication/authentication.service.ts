@@ -1,17 +1,17 @@
 import {
-  ConflictException,
-  Inject, Injectable, OnModuleInit,
+  Inject, Injectable, OnModuleInit, UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import {
-  jwtConfig, profileConfig, SignUpDto,
+  ActiveUserData,
+  IProfileService,
+  jwtConfig, profileConfig, SignInDto, SignUpDto, User,
 } from '@immensus/data-access-services';
 import {
   Client, ClientGrpc, ClientOptions, RpcException,
 } from '@nestjs/microservices';
 import { HashingService } from '../hashing/hashing.service';
-import { IProfileService } from '../../../../gateway-service/src/app/profile/interfaces/profile.interface';
 
 @Injectable()
 export class AuthenticationService implements OnModuleInit {
@@ -50,45 +50,46 @@ export class AuthenticationService implements OnModuleInit {
     }
   }
 
-  // async signIn(signInDto: SignInDto) {
-  //   const user = await this.usersRepository.findOneBy({ email: signInDto.email });
-  //   if (!user) throw new UnauthorizedException('User does not exist');
-  //   const isEqual = this.hashingService.compare(signInDto.password, user.password);
-  //   if (!isEqual) throw new UnauthorizedException('Password does not match');
-  //   return this.generateTokens(user);
-  // }
-  //
-  // private async generateTokens(user: User) {
-  //   const [accessToken, refreshToken] = await Promise.all([
-  //     this.signToken<Partial<ActiveUserData>>(
-  //       user.id,
-  //       this.jwtConfiguration.accessTokenTtl,
-  //       { email: user.email, role: user.role },
-  //     ),
-  //     this.signToken<Partial<ActiveUserData>>(
-  //       user.id,
-  //       this.jwtConfiguration.refreshTokenTtl,
-  //     ),
-  //   ]);
-  //
-  //   return {
-  //     accessToken,
-  //     refreshToken,
-  //   };
-  // }
-  //
-  // private signToken<T>(userId: number, expiresIn: number, payload?:T) {
-  //   return this.jwtService.signAsync({
-  //     sub: userId,
-  //     ...payload,
-  //   }, {
-  //     audience: this.jwtConfiguration.audience,
-  //     issuer: this.jwtConfiguration.issuer,
-  //     secret: this.jwtConfiguration.secret,
-  //     expiresIn: this.jwtConfiguration.accessTokenTtl,
-  //   });
-  // }
-  //
+  async signIn(signInDto: SignInDto) {
+    const user = await this.profileService.GetProfile({ email: signInDto.email }).toPromise();
+    if (!user) throw new UnauthorizedException('User does not exist');
+
+    const isEqual = this.hashingService.compare(signInDto.password, user.password);
+    if (!isEqual) throw new UnauthorizedException('Password does not match');
+    return this.generateTokens(user);
+  }
+
+  private async generateTokens(user: User) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.signToken<Partial<ActiveUserData>>(
+        user.id,
+        this.jwtConfiguration.accessTokenTtl,
+        { email: user.email, role: user.role },
+      ),
+      this.signToken<Partial<ActiveUserData>>(
+        user.id,
+        this.jwtConfiguration.refreshTokenTtl,
+      ),
+    ]);
+
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  private signToken<T>(userId: number, expiresIn: number, payload?:T) {
+    return this.jwtService.signAsync({
+      sub: userId,
+      ...payload,
+    }, {
+      audience: this.jwtConfiguration.audience,
+      issuer: this.jwtConfiguration.issuer,
+      secret: this.jwtConfiguration.secret,
+      expiresIn: this.jwtConfiguration.accessTokenTtl,
+    });
+  }
+
   // async refreshTokens(
   //   { refreshingToken }: RefreshingTokenDto,
   // ) {

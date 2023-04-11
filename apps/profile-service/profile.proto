@@ -10,7 +10,8 @@ service ProfileService {
 message GetProfileResponse{
   optional int32 id = 1;
   optional string email = 2;
-  optional string role = 3;
+  optional string password = 3;
+  optional string role = 4;
 }
 
 message GetProfileDto{

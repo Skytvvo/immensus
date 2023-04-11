@@ -4,8 +4,9 @@ import {
 import {
   Client, ClientGrpc, ClientOptions,
 } from '@nestjs/microservices';
-import { AuthType, GetProfileDto, profileConfig } from '@immensus/data-access-services';
-import { IProfileService } from './interfaces/profile.interface';
+import {
+  AuthType, GetProfileDto, profileConfig, IProfileService,
+} from '@immensus/data-access-services';
 import { Auth } from '../../decorators/auth.decorator';
 import { GetProfilePipe } from './pipes/get-profile.pipe';
 
