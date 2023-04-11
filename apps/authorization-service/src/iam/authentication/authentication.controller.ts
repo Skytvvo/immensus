@@ -20,6 +20,6 @@ export class AuthenticationController {
 
   @GrpcMethod('AuthenticationService', 'RefreshTokens')
   async refreshTokens(refreshingToken: RefreshingTokenDto) {
-    // return this.authService.refreshTokens(refreshingToken);
+    return this.authService.refreshTokens(refreshingToken);
   }
 }
