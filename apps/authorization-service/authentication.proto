@@ -5,7 +5,7 @@ package authentication;
 service AuthenticationService {
   rpc SignUp (SignUpDto) returns (Undefined);
   rpc SignIn (SignInDto) returns (TokensResponse);
-  rpc RefreshTokens (RefreshingTokenDto) returns (Undefined);
+  rpc RefreshTokens (RefreshingTokenDto) returns (TokensResponse);
 }
 
 message SignUpDto{

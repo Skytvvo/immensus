@@ -6,7 +6,7 @@ import { ConfigType } from '@nestjs/config';
 import {
   ActiveUserData,
   IProfileService,
-  jwtConfig, profileConfig, SignInDto, SignUpDto, User,
+  jwtConfig, profileConfig, RefreshingTokenDto, SignInDto, SignUpDto, User,
 } from '@immensus/data-access-services';
 import {
   Client, ClientGrpc, ClientOptions, RpcException,
@@ -90,23 +90,20 @@ export class AuthenticationService implements OnModuleInit {
     });
   }
 
-  // async refreshTokens(
-  //   { refreshingToken }: RefreshingTokenDto,
-  // ) {
-  //   try {
-  //     const { sub } = await this.jwtService.verifyAsync<Pick<ActiveUserData, 'sub'>>(refreshingToken, {
-  //       secret: this.jwtConfiguration.secret,
-  //       audience: this.jwtConfiguration.audience,
-  //       issuer: this.jwtConfiguration.issuer,
-  //     });
-  //
-  //     const user = await this.usersRepository.findOneByOrFail({
-  //       id: sub,
-  //     });
-  //
-  //     return this.generateTokens(user);
-  //   } catch (err) {
-  //     throw new UnauthorizedException();
-  //   }
-  // }
+  async refreshTokens(
+    { refreshingToken }: RefreshingTokenDto,
+  ) {
+    try {
+      const { sub } = await this.jwtService.verifyAsync<Pick<ActiveUserData, 'sub'>>(refreshingToken, {
+        secret: this.jwtConfiguration.secret,
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+      });
+
+      const user = await this.profileService.GetProfile({ id: sub }).toPromise();
+      return this.generateTokens(user);
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
+  }
 }
