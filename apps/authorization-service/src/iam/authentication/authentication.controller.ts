@@ -15,7 +15,7 @@ export class AuthenticationController {
 
   @GrpcMethod('AuthenticationService', 'SignIn')
   async signIn(signInDto: SignInDto) {
-    // return this.authService.signIn(signInDto);
+    return this.authService.signIn(signInDto);
   }
 
   @GrpcMethod('AuthenticationService', 'RefreshTokens')
