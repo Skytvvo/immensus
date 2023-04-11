@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Get, HttpCode, HttpStatus, OnModuleInit, Post, Req, Res,
+  Body, ConflictException, Controller, Get, HttpCode, HttpStatus, OnModuleInit, Post, Req, Res,
 } from '@nestjs/common';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import {
@@ -23,7 +23,11 @@ export class AuthController implements OnModuleInit {
 
   @Post('sign-up')
   async signUp(@Body() signUpDto: SignUpDto) {
-    return this.iamService.signUp(signUpDto);
+    try {
+      return this.iamService.signUp(signUpDto);
+    } catch (err) {
+      throw new ConflictException();
+    }
   }
 
   @HttpCode(HttpStatus.OK)

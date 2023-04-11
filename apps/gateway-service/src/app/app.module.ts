@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
+import { jwtConfig } from '@immensus/data-access-services';
 import { AuthController } from './auth/auth.controller';
 import { ProfileController } from './profile/profile.controller';
 import { AuthenticationGuard } from '../guards/authentication.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { AccessTokenGuard } from '../guards/access-token.guard';
-import jwtConfig from '../../../authorization-service/src/iam/config/jwt.config';
 
 @Module({
   imports: [

@@ -1,5 +1,7 @@
 import { Observable } from 'rxjs';
+import { GetProfileDto } from '@immensus/data-access-services';
 
 export interface IProfileService{
-  getData(data: Record<string, never>): Observable<any>;
+  GetProfile(data: Partial<GetProfileDto>): Observable<any>;
+  CreateProfile(data: any): Observable<undefined>;
 }

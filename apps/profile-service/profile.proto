@@ -1,12 +1,28 @@
-import "google/protobuf/empty.proto";
 syntax = "proto3";
 
 package profile;
 
 service ProfileService {
-  rpc GetData (google.protobuf.Empty) returns (getDataMessage);
+  rpc GetProfile (GetProfileDto) returns (GetProfileResponse);
+  rpc CreateProfile (CreateProfileDto) returns (Undefined);
 }
 
-message getDataMessage{
-  string message = 1;
+message GetProfileResponse{
+  optional int32 id = 1;
+  optional string email = 2;
+  optional string role = 3;
+}
+
+message GetProfileDto{
+  optional int32 id = 1;
+  optional string email = 2;
+}
+
+message CreateProfileDto{
+  string email = 1;
+  string password = 2;
+}
+
+message Undefined {
+
 }

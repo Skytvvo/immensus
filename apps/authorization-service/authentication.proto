@@ -3,9 +3,9 @@ syntax = "proto3";
 package authentication;
 
 service AuthenticationService {
-  rpc signUp (SignUpDto) returns (Undefined);
-  rpc signIn (SignInDto) returns (TokensResponse);
-  rpc refreshTokens (RefreshingTokenDto) returns (TokensResponse);
+  rpc SignUp (SignUpDto) returns (Undefined);
+  rpc SignIn (SignInDto) returns (TokensResponse);
+  rpc RefreshTokens (RefreshingTokenDto) returns (Undefined);
 }
 
 message SignUpDto{
