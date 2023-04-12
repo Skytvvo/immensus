@@ -11,10 +11,10 @@ import {
 import {
   Client, ClientGrpc, ClientOptions, RpcException,
 } from '@nestjs/microservices';
-import { HashingService } from '../hashing/hashing.service';
+import { HashingService } from './hashing/hashing.service';
 
 @Injectable()
-export class AuthenticationService implements OnModuleInit {
+export class IamService implements OnModuleInit {
   constructor(
         private readonly hashingService: HashingService,
         private readonly jwtService: JwtService,

@@ -1,12 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { RefreshingTokenDto, SignInDto, SignUpDto } from '@immensus/data-access-services';
-import { AuthenticationService } from './authentication.service';
+import { IamService } from './iam.service';
 
 @Controller()
-export class AuthenticationController {
-  constructor(private readonly authService: AuthenticationService) {
-  }
+export class IamController {
+  constructor(private readonly authService: IamService) {}
 
   @GrpcMethod('AuthenticationService', 'SignUp')
   signUp(signUpDto: SignUpDto) {

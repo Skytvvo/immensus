@@ -4,20 +4,20 @@ import { ConfigModule } from '@nestjs/config';
 import { jwtConfig } from '@immensus/data-access-services';
 import { HashingService } from './hashing/hashing.service';
 import { BcryptService } from './hashing/bcrypt.service';
-import { AuthenticationController } from './authentication/authentication.controller';
-import { AuthenticationService } from './authentication/authentication.service';
+import { IamController } from './iam.controller';
+import { IamService } from './iam.service';
 
 @Module({
   imports: [
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
   ],
-  controllers: [AuthenticationController],
+  controllers: [IamController],
   providers: [{
     provide: HashingService,
     useClass: BcryptService,
   },
-  AuthenticationService,
+  IamService,
   ],
 })
 export class IamModule {}

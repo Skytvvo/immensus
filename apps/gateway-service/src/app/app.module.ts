@@ -3,18 +3,19 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { jwtConfig } from '@immensus/data-access-services';
-import { AuthController } from './auth/auth.controller';
 import { ProfileController } from './profile/profile.controller';
 import { AuthenticationGuard } from '../guards/authentication.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { AccessTokenGuard } from '../guards/access-token.guard';
+import { IamController } from './iam/iam.controller';
+import { IamService } from './iam/iam.service';
 
 @Module({
   imports: [
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
   ],
-  controllers: [AuthController, ProfileController],
+  controllers: [IamController, ProfileController],
   providers: [
     {
       provide: APP_GUARD,
@@ -25,6 +26,7 @@ import { AccessTokenGuard } from '../guards/access-token.guard';
       useClass: RolesGuard,
     },
     AccessTokenGuard,
+    IamService,
   ],
 })
 export class AppModule {}
