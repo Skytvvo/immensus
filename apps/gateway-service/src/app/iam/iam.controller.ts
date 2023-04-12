@@ -6,12 +6,12 @@ import {
 } from '@immensus/data-access-services';
 import { Response } from 'express';
 import { Auth } from '../../decorators/auth.decorator';
-import { IamService } from './iam.service';
+import { IIamService } from './iam.service';
 
 @Auth(AuthType.NONE)
 @Controller('auth')
 export class IamController {
-  constructor(private readonly iamService: IamService) {}
+  constructor(private readonly iamService: IIamService) {}
 
   @Post('sign-up')
   async signUp(@Body() signUpDto: SignUpDto) {

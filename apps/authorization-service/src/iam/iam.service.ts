@@ -4,7 +4,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import {
-  ActiveUserData,
+  IActiveUserData,
   IProfileService,
   jwtConfig, profileConfig, RefreshingTokenDto, SignInDto, SignUpDto, User,
 } from '@immensus/data-access-services';
@@ -61,12 +61,12 @@ export class IamService implements OnModuleInit {
 
   private async generateTokens(user: User) {
     const [accessToken, refreshToken] = await Promise.all([
-      this.signToken<Partial<ActiveUserData>>(
+      this.signToken<Partial<IActiveUserData>>(
         user.id,
         this.jwtConfiguration.accessTokenTtl,
         { email: user.email, role: user.role },
       ),
-      this.signToken<Partial<ActiveUserData>>(
+      this.signToken<Partial<IActiveUserData>>(
         user.id,
         this.jwtConfiguration.refreshTokenTtl,
       ),
@@ -94,7 +94,7 @@ export class IamService implements OnModuleInit {
     { refreshingToken }: RefreshingTokenDto,
   ) {
     try {
-      const { sub } = await this.jwtService.verifyAsync<Pick<ActiveUserData, 'sub'>>(refreshingToken, {
+      const { sub } = await this.jwtService.verifyAsync<Pick<IActiveUserData, 'sub'>>(refreshingToken, {
         secret: this.jwtConfiguration.secret,
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,

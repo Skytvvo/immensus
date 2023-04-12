@@ -8,7 +8,7 @@ import { AuthenticationGuard } from '../guards/authentication.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { AccessTokenGuard } from '../guards/access-token.guard';
 import { IamController } from './iam/iam.controller';
-import { IamService } from './iam/iam.service';
+import { IIamService } from './iam/iam.service';
 
 @Module({
   imports: [
@@ -26,7 +26,7 @@ import { IamService } from './iam/iam.service';
       useClass: RolesGuard,
     },
     AccessTokenGuard,
-    IamService,
+    IIamService,
   ],
 })
 export class AppModule {}

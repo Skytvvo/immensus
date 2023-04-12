@@ -1,18 +1,19 @@
 import { ConflictException, Injectable, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
-import { iamConfig, SignInDto, SignUpDto } from '@immensus/data-access-services';
+import {
+  iamConfig, IIamRpcService, SignInDto, SignUpDto,
+} from '@immensus/data-access-services';
 import { Response, Request } from 'express';
-import { IAuthService } from './interfaces/iam.interface';
 
 @Injectable()
-export class IamService implements OnModuleInit {
+export class IIamService implements OnModuleInit {
   @Client(iamConfig as ClientOptions)
   private client: ClientGrpc;
 
-  private iamRpcService: IAuthService;
+  private iamRpcService: IIamRpcService;
 
   onModuleInit() {
-    this.iamRpcService = this.client.getService<IAuthService>('AuthenticationService');
+    this.iamRpcService = this.client.getService<IIamRpcService>('AuthenticationService');
   }
 
   signUp(signUpDto: SignUpDto) {
