@@ -16,6 +16,8 @@
     "gateway-service:build": "nx build gateway-service",
     "profile-service:dev": "nx serve profile-service",
     "profile-service:build": "nx build profile-service",
+    "post-service:dev": "nx serve post-service",
+    "post-service:build": "nx build post-service",
     "components:dev": "nx run components:storybook",
     "components:build": "nx run components:build-storybook",
     "lint": "nx run-many --target=lint --all --fix",
