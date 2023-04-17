@@ -1,7 +1,7 @@
 {
-  "name": "authorization-service",
+  "name": "iam-service",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/authorization-service/src",
+  "sourceRoot": "apps/iam-service/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,12 +11,12 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/authorization-service",
-        "main": "apps/authorization-service/src/main.ts",
-        "tsConfig": "apps/authorization-service/tsconfig.app.json",
-        "assets": ["apps/authorization-service/src/assets"],
+        "outputPath": "dist/apps/iam-service",
+        "main": "apps/iam-service/src/main.ts",
+        "tsConfig": "apps/iam-service/tsconfig.app.json",
+        "assets": ["apps/iam-service/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/authorization-service/webpack.config.js"
+        "webpackConfig": "apps/iam-service/webpack.config.js"
       },
       "configurations": {
         "development": {},
@@ -27,17 +27,17 @@
       "executor": "@nrwl/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "authorization-service:build"
+        "buildTarget": "iam-service:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "authorization-service:build:development"
+          "buildTarget": "iam-service:build:development"
         },
         "production": {
-          "buildTarget": "authorization-service:build:production"
+          "buildTarget": "iam-service:build:production"
         },
         "repl": {
-          "buildTarget": "authorization-service:repl"
+          "buildTarget": "iam-service:repl"
         }
       }
     },
@@ -45,14 +45,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/authorization-service/**/*.ts"]
+        "lintFilePatterns": ["apps/iam-service/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/authorization-service/jest.config.ts",
+        "jestConfig": "apps/iam-service/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {
@@ -66,14 +66,14 @@
       "dependsOn": ["build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker build -f apps/authorization-service/Dockerfile -t skytvvo/immensus-authorization-service ."]
+        "commands": ["docker build -f apps/iam-service/Dockerfile -t skytvvo/immensus-iam-service ."]
       }
     },
     "docker-push": {
       "dependsOn": ["docker-build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker push skytvvo/immensus-authorization-service"]
+        "commands": ["docker push skytvvo/immensus-iam-service"]
       }
     },
     "repl": {
@@ -84,9 +84,9 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/authorization-service",
-        "main": "apps/authorization-service/src/repl.ts",
-        "tsConfig": "apps/authorization-service/tsconfig.app.json",
+        "outputPath": "dist/apps/iam-service",
+        "main": "apps/iam-service/src/repl.ts",
+        "tsConfig": "apps/iam-service/tsconfig.app.json",
         "assets": []
       },
       "configurations": {
@@ -96,8 +96,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/authorization-service/src/environments/environment.ts",
-              "with": "apps/authorization-service/src/environments/environment.prod.ts"
+              "replace": "apps/iam-service/src/environments/environment.ts",
+              "with": "apps/iam-service/src/environments/environment.prod.ts"
             }
           ]
         }

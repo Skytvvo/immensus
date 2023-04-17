@@ -5,8 +5,8 @@ services:
     env_file: .env
     ports:
       - '4200:4200'
-  authorization-service:
-    image: skytvvo/immensus-authorization-service
+  iam-service:
+    image: skytvvo/immensus-iam-service
     env_file:
       - .env
     ports:
