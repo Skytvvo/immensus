@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package authentication;
+package iam;
 
-service AuthenticationService {
+service IamService {
   rpc SignUp (SignUpDto) returns (Undefined);
   rpc SignIn (SignInDto) returns (TokensResponse);
   rpc RefreshTokens (RefreshingTokenDto) returns (TokensResponse);

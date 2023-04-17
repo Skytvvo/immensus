@@ -7,17 +7,17 @@ import { IamService } from './iam.service';
 export class IamController {
   constructor(private readonly authService: IamService) {}
 
-  @GrpcMethod('AuthenticationService', 'SignUp')
+  @GrpcMethod('IamService', 'SignUp')
   signUp(signUpDto: SignUpDto) {
     return this.authService.signUp(signUpDto);
   }
 
-  @GrpcMethod('AuthenticationService', 'SignIn')
+  @GrpcMethod('IamService', 'SignIn')
   async signIn(signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
   }
 
-  @GrpcMethod('AuthenticationService', 'RefreshTokens')
+  @GrpcMethod('IamService', 'RefreshTokens')
   async refreshTokens(refreshingToken: RefreshingTokenDto) {
     return this.authService.refreshTokens(refreshingToken);
   }

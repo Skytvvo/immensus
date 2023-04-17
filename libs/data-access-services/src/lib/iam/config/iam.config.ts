@@ -1,14 +1,14 @@
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { join } from 'path';
 
-const PORT = process.env.PORT_AUTHORIZATION_SERVICE || 4400;
-const HOST = process.env.HOST_AUTHORIZATION_SERVICE || 'localhost';
+const PORT = process.env.PORT_IAM_SERVICE || 4400;
+const HOST = process.env.HOST_IAM_SERVICE || 'localhost';
 
 const iamConfig: MicroserviceOptions ={
   transport: Transport.GRPC,
   options: {
-    package: 'authentication',
-    protoPath: join(__dirname, '../../../apps/authorization-service/authentication.proto'),
+    package: 'iam',
+    protoPath: join(__dirname, '../../../apps/iam-service/iam.proto'),
     url: `${HOST}:${PORT}`,
     loader: { keepCase: true, arrays: true, objects: true },
   },

@@ -13,7 +13,7 @@ export class IIamService implements OnModuleInit {
   private iamRpcService: IIamRpcService;
 
   onModuleInit() {
-    this.iamRpcService = this.client.getService<IIamRpcService>('AuthenticationService');
+    this.iamRpcService = this.client.getService<IIamRpcService>('IamService');
   }
 
   signUp(signUpDto: SignUpDto) {
