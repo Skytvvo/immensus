@@ -35,7 +35,11 @@ export class IamService implements OnModuleInit {
     let existingUser = null;
     try {
       existingUser = await this.profileService.GetProfile({ email: signUpDto.email })?.toPromise();
-    } catch (err) {}
+    } catch (err) {
+      if (err instanceof RpcException) {
+        throw new UnauthorizedException(err.message);
+      }
+    }
 
     if (existingUser) throw new RpcException('User already exist');
 
