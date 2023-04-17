@@ -9,19 +9,25 @@ service ProfileService {
 
 message GetProfileResponse{
   optional int32 id = 1;
-  optional string email = 2;
-  optional string password = 3;
-  optional string role = 4;
+  optional string fullName = 2;
+  optional int32 nickname = 3;
+  optional string email = 4;
+  optional string password = 5;
+  optional string role = 6;
 }
 
 message GetProfileDto{
   optional int32 id = 1;
   optional string email = 2;
+  optional string fullName = 3;
+  optional string nickname = 4;
 }
 
 message CreateProfileDto{
-  string email = 1;
-  string password = 2;
+  string fullName = 1;
+  string nickname = 2;
+  string email = 3;
+  string password = 4;
 }
 
 message Undefined {

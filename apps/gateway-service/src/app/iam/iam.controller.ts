@@ -2,7 +2,7 @@ import {
   Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res,
 } from '@nestjs/common';
 import {
-  AuthType, SignInDto, SignUpDto,
+  AuthType, CreateProfileDto, SignInDto,
 } from '@immensus/data-access-services';
 import { Response } from 'express';
 import { Auth } from '../../decorators/auth.decorator';
@@ -14,7 +14,7 @@ export class IamController {
   constructor(private readonly iamService: IIamService) {}
 
   @Post('sign-up')
-  async signUp(@Body() signUpDto: SignUpDto) {
+  async signUp(@Body() signUpDto: CreateProfileDto) {
     return this.iamService.signUp(signUpDto);
   }
 

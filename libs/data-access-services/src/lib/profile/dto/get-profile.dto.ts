@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber } from "class-validator";
+import { IsEmail, IsNumber, IsString } from "class-validator";
 
 export class GetProfileDto {
   @IsEmail()
@@ -6,4 +6,10 @@ export class GetProfileDto {
 
   @IsNumber()
   id: number;
+
+  @IsString()
+  fullName: string;
+
+  @IsString()
+  nickname: string;
 }

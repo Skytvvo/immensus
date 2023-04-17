@@ -4,9 +4,10 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import {
+  CreateProfileDto,
   IActiveUserData,
   IProfileService,
-  jwtConfig, profileConfig, RefreshingTokenDto, SignInDto, SignUpDto, User,
+  jwtConfig, profileConfig, RefreshingTokenDto, SignInDto, User,
 } from '@immensus/data-access-services';
 import {
   Client, ClientGrpc, ClientOptions, RpcException,
@@ -31,7 +32,7 @@ export class IamService implements OnModuleInit {
     this.profileService = this.client.getService<IProfileService>('ProfileService');
   }
 
-  async signUp(signUpDto: SignUpDto) {
+  async signUp(signUpDto: CreateProfileDto) {
     let existingUser = null;
     try {
       existingUser = await this.profileService.GetProfile({ email: signUpDto.email })?.toPromise();
@@ -46,7 +47,7 @@ export class IamService implements OnModuleInit {
     try {
       const password = await this.hashingService.hash(signUpDto.password);
       return this.profileService.CreateProfile({
-        email: signUpDto.email,
+        ...signUpDto,
         password,
       });
     } catch (err) {
