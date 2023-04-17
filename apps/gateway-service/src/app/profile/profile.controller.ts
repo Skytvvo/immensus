@@ -1,5 +1,5 @@
 import {
-  Controller, Get, NotFoundException, OnModuleInit, Query,
+  Controller, Get, OnModuleInit, Query,
 } from '@nestjs/common';
 import {
   Client, ClientGrpc, ClientOptions,
@@ -26,10 +26,6 @@ export class ProfileController implements OnModuleInit {
   async getProfile(
     @Query(new GetProfilePipe()) dto: GetProfileDto,
   ) {
-    try {
-      return this.profileService.GetProfile(dto);
-    } catch (err) {
-      throw new NotFoundException(err.message);
-    }
+    return this.profileService.GetProfile(dto);
   }
 }

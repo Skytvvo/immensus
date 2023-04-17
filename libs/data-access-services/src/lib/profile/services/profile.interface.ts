@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
-import { GetProfileDto } from "../dto";
+import { CreateProfileDto, GetProfileDto } from "../dto";
+import { User } from "../entities";
 
 export interface IProfileService{
-  GetProfile(data: Partial<GetProfileDto>): Observable<any>;
-  CreateProfile(data: any): Observable<undefined>;
+  GetProfile(data: Partial<GetProfileDto>): Observable<User>;
+  CreateProfile(data: CreateProfileDto): Observable<undefined>;
 }

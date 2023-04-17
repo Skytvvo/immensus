@@ -8,11 +8,16 @@ import { RpcException } from '@nestjs/microservices';
 export class UsersService {
   constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>) {}
 
-  async createProfile({ email, password }: CreateProfileDto) {
+  async createProfile({
+    email, password, fullName, nickname,
+  }: CreateProfileDto) {
     try {
       const user = new User();
       user.email = email;
       user.password = password;
+      user.fullName = fullName;
+      user.nickname = nickname;
+
       await this.usersRepository.save(user);
     } catch (err) {
       throw new RpcException(err.message);
