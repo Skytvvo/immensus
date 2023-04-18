@@ -9,13 +9,15 @@ import { RolesGuard } from '../guards/roles.guard';
 import { AccessTokenGuard } from '../guards/access-token.guard';
 import { IamController } from './iam/iam.controller';
 import { IIamService } from './iam/iam.service';
+import { PostController } from './post/post.controller';
+import { PostService } from './post/post.service';
 
 @Module({
   imports: [
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
   ],
-  controllers: [IamController, ProfileController],
+  controllers: [IamController, ProfileController, PostController],
   providers: [
     {
       provide: APP_GUARD,
@@ -27,6 +29,7 @@ import { IIamService } from './iam/iam.service';
     },
     AccessTokenGuard,
     IIamService,
+    PostService,
   ],
 })
 export class AppModule {}
