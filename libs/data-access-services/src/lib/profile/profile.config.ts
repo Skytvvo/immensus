@@ -1,17 +1,10 @@
-import { MicroserviceOptions, Transport } from "@nestjs/microservices";
-import { join } from 'path';
+import microserviceConfig from "../microservice.config";
 
-const PORT = process.env.PORT_PROFILE_SERVICE || 4402;
-const HOST = process.env.HOST_PROFILE_SERVICE || 'localhost';
+const PORT_PROFILE = process.env.PORT_PROFILE_SERVICE || 4402;
+const HOST_PROFILE = process.env.HOST_PROFILE_SERVICE || 'localhost';
+const PROFILE_NAME = 'profile';
 
-const profileConfig: MicroserviceOptions ={
-  transport: Transport.GRPC,
-  options: {
-    package: 'profile',
-    protoPath: join(__dirname, '../../../apps/profile-service/profile.proto'),
-    url: `${HOST}:${PORT}`,
-    loader: { keepCase: true, arrays: true, objects: true },
-  },
-};
+export const profileConfig = microserviceConfig(HOST_PROFILE, PORT_PROFILE, PROFILE_NAME);
 
-export default profileConfig;
+
+export const PROFILE_SERVICE_NAME = 'ProfileService';

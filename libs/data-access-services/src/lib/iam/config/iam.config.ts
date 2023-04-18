@@ -1,17 +1,9 @@
-import { MicroserviceOptions, Transport } from "@nestjs/microservices";
-import { join } from 'path';
+import microserviceConfig from "../../microservice.config";
 
-const PORT = process.env.PORT_IAM_SERVICE || 4400;
-const HOST = process.env.HOST_IAM_SERVICE || 'localhost';
+export const PORT_IAM = process.env.PORT_IAM_SERVICE || 4400;
+export const HOST_IAM = process.env.HOST_IAM_SERVICE || 'localhost';
+export const NAME_IAM = 'iam';
 
-const iamConfig: MicroserviceOptions ={
-  transport: Transport.GRPC,
-  options: {
-    package: 'iam',
-    protoPath: join(__dirname, '../../../apps/iam-service/iam.proto'),
-    url: `${HOST}:${PORT}`,
-    loader: { keepCase: true, arrays: true, objects: true },
-  },
-};
+export const iamConfig = microserviceConfig(HOST_IAM, PORT_IAM, NAME_IAM);
 
-export default iamConfig;
+export const IAM_SERVICE_NAME = 'IamService';

@@ -1,0 +1,12 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package post;
+
+service PostService {
+  rpc GetData (google.protobuf.Empty) returns (GetDataResponseDto);
+}
+
+message GetDataResponseDto {
+  string message = 1;
+}

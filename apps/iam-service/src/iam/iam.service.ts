@@ -7,7 +7,7 @@ import {
   CreateProfileDto,
   IActiveUserData,
   IProfileService,
-  jwtConfig, profileConfig, RefreshingTokenDto, SignInDto, User,
+  jwtConfig, PROFILE_SERVICE_NAME, profileConfig, RefreshingTokenDto, SignInDto, User,
 } from '@immensus/data-access-services';
 import {
   Client, ClientGrpc, ClientOptions, RpcException,
@@ -29,7 +29,7 @@ export class IamService implements OnModuleInit {
   private profileService: IProfileService;
 
   onModuleInit() {
-    this.profileService = this.client.getService<IProfileService>('ProfileService');
+    this.profileService = this.client.getService<IProfileService>(PROFILE_SERVICE_NAME);
   }
 
   async signUp(signUpDto: CreateProfileDto) {

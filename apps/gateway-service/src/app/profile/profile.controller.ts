@@ -5,7 +5,7 @@ import {
   Client, ClientGrpc, ClientOptions,
 } from '@nestjs/microservices';
 import {
-  AuthType, GetProfileDto, profileConfig, IProfileService,
+  AuthType, GetProfileDto, profileConfig, IProfileService, PROFILE_SERVICE_NAME,
 } from '@immensus/data-access-services';
 import { Auth } from '../../decorators/auth.decorator';
 import { GetProfilePipe } from './pipes/get-profile.pipe';
@@ -19,7 +19,7 @@ export class ProfileController implements OnModuleInit {
   private profileService: IProfileService;
 
   onModuleInit() {
-    this.profileService = this.client.getService<IProfileService>('ProfileService');
+    this.profileService = this.client.getService<IProfileService>(PROFILE_SERVICE_NAME);
   }
 
   @Get()
