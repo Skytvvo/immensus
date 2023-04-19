@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
-import { CreatePostDto } from "../dto";
+import { CreatePostDto, GetPostDto } from "../dto";
+import { Post } from "../entities";
 
 export interface IPostRpcService{
-  getData(dto: unknown): Observable<undefined>;
-  createPost(createPostDto: CreatePostDto): Observable<undefined>;
+  CreatePost(createPostDto: CreatePostDto): Observable<undefined>;
+  GetPost(getPostDto: GetPostDto): Observable<Post>;
 }

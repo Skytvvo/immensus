@@ -1,18 +1,39 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/type.proto";
 
 package post;
 
 service PostService {
-  rpc GetData (google.protobuf.Empty) returns (GetDataResponseDto);
   rpc CreatePost (CratePostDto) returns (google.protobuf.Empty);
-}
-
-message GetDataResponseDto {
-  string message = 1;
+  rpc GetPost (GetPostDto) returns (GetPostResponseDto);
 }
 
 message CratePostDto {
   string authorId = 1;
   string description = 2;
+}
+
+message GetPostDto {
+  string id = 1;
+}
+
+message GetPostResponseDto {
+  string id = 1;
+  string description = 2;
+  int32 likes = 3;
+  int32 shared = 4;
+  int32 viewed = 5;
+  int32 comments = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+  User author = 9;
+}
+
+message User {
+  optional string id = 1;
+  optional string fullName = 2;
+  optional string nickname = 3;
+  optional string email = 4;
 }

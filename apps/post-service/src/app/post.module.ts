@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post, User } from '@immensus/data-access-services';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { PostController } from './post.controller';
+import { PostService } from './post.service';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { AppService } from './app.service';
     }),
     TypeOrmModule.forFeature([Post, User]),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [PostController],
+  providers: [PostService],
 })
-export class AppModule {}
+export class PostModule {}

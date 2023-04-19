@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import {
-  CreatePostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig,
+  CreatePostDto, GetPostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig,
 } from '@immensus/data-access-services';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class AppService implements OnModuleInit {
+export class PostService implements OnModuleInit {
   @Client(profileConfig as ClientOptions)
   private profileClient: ClientGrpc;
 
@@ -19,10 +19,6 @@ export class AppService implements OnModuleInit {
 
   constructor(@InjectRepository(Post) private readonly postRepository: Repository<Post>) {}
 
-  getData(): { message: string } {
-    return { message: 'Hello API' };
-  }
-
   async createPost(createPostDto: CreatePostDto) {
     const { authorId, description } = createPostDto;
 
@@ -33,5 +29,21 @@ export class AppService implements OnModuleInit {
     const post = new Post(author, description);
 
     await this.postRepository.save(post);
+  }
+
+  async getPost(getPostDto: GetPostDto) {
+    const { id } = getPostDto;
+
+    const post = await this.postRepository
+      .createQueryBuilder('post')
+      .innerJoinAndSelect('post.author', 'user')
+      .where('post.id = :id', { id })
+      .getOne();
+
+    if (!post) {
+      throw new NotFoundException();
+    }
+
+    return post;
   }
 }
