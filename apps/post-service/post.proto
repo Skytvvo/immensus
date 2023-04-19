@@ -5,8 +5,14 @@ package post;
 
 service PostService {
   rpc GetData (google.protobuf.Empty) returns (GetDataResponseDto);
+  rpc CreatePost (CratePostDto) returns (google.protobuf.Empty);
 }
 
 message GetDataResponseDto {
   string message = 1;
+}
+
+message CratePostDto {
+  string authorId = 1;
+  string description = 2;
 }

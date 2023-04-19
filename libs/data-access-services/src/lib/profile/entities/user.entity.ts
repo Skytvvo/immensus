@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { RoleEnum } from "../../iam";
+import { Post } from "../../post";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   fullName: string;
@@ -23,4 +24,7 @@ export class User {
 
   @Column({nullable: true})
   avatar: string;
+
+  @OneToMany(()=> Post, post => post.author)
+  posts: Post[];
 }

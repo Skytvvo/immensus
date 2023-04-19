@@ -1,9 +1,11 @@
 import {
-  Controller, Get,
+  Body,
+  Controller, Get, Post, Req,
 } from '@nestjs/common';
 import {
-  AuthType,
+  AuthType, CreatePostDto,
 } from '@immensus/data-access-services';
+import { Request } from 'express';
 import { Auth } from '../../decorators/auth.decorator';
 import { PostService } from './post.service';
 
@@ -15,5 +17,10 @@ export class PostController {
   @Get()
   async getData() {
     return this.postService.getData();
+  }
+
+  @Post()
+  createPost(@Req() req: Request, @Body() createPostDto: Omit<CreatePostDto, 'authorId'>) {
+    return this.postService.createPost(createPostDto, req.cookies);
   }
 }
