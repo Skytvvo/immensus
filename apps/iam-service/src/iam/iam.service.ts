@@ -83,7 +83,7 @@ export class IamService implements OnModuleInit {
     };
   }
 
-  private signToken<T>(userId: number, expiresIn: number, payload?:T) {
+  private signToken<T>(userId: string, expiresIn: number, payload?:T) {
     return this.jwtService.signAsync({
       sub: userId,
       ...payload,

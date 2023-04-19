@@ -8,7 +8,6 @@ import {
   AuthType, GetProfileDto, profileConfig, IProfileService, PROFILE_SERVICE_NAME,
 } from '@immensus/data-access-services';
 import { Auth } from '../../decorators/auth.decorator';
-import { GetProfilePipe } from './pipes/get-profile.pipe';
 
 @Auth(AuthType.NONE)
 @Controller('profile')
@@ -24,7 +23,7 @@ export class ProfileController implements OnModuleInit {
 
   @Get()
   async getProfile(
-    @Query(new GetProfilePipe()) dto: GetProfileDto,
+    @Query() dto: GetProfileDto,
   ) {
     return this.profileService.GetProfile(dto);
   }

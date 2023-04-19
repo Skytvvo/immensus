@@ -1,7 +1,7 @@
 import { RoleEnum } from "../iam.enum";
 
 export interface IActiveUserData{
-  sub: number;
+  sub: string;
   email: string;
   role: RoleEnum
 }

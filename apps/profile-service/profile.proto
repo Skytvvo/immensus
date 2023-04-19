@@ -8,7 +8,7 @@ service ProfileService {
 }
 
 message GetProfileResponse{
-  optional int32 id = 1;
+  optional string id = 1;
   optional string fullName = 2;
   optional int32 nickname = 3;
   optional string email = 4;
@@ -17,7 +17,7 @@ message GetProfileResponse{
 }
 
 message GetProfileDto{
-  optional int32 id = 1;
+  optional string id = 1;
   optional string email = 2;
   optional string fullName = 3;
   optional string nickname = 4;
