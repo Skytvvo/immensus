@@ -16,7 +16,10 @@ export class Post {
   shared: number;
 
   @Column({default: 0})
-  viewed: string;
+  viewed: number;
+
+  @Column({default: 0})
+  comments: number;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
