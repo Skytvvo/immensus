@@ -9,6 +9,7 @@ service PostService {
   rpc CreatePost (CratePostDto) returns (google.protobuf.Empty);
   rpc GetPost (GetPostDto) returns (GetPostResponseDto);
   rpc GetPosts (GetPostsDto) returns (GetPostsResponseDto);
+  rpc PatchPost (PatchPostDto) returns (GetPostResponseDto);
 }
 
 message CratePostDto {
@@ -47,5 +48,10 @@ message GetPostsDto {
 message GetPostsResponseDto {
   repeated GetPostResponseDto posts = 1;
   string cursor = 2;
+}
+
+message PatchPostDto {
+  string id = 1;
+  string description = 2;
 }
 

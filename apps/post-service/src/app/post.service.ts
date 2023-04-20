@@ -3,7 +3,7 @@ import {
 } from '@nestjs/common';
 import {
   CreatePostDto,
-  GetPostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig, GetPostsDto,
+  GetPostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig, GetPostsDto, PatchPostDto,
 } from '@immensus/data-access-services';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -69,5 +69,20 @@ export class PostService implements OnModuleInit {
       posts,
       cursor: posts[pageSize - 1]?.createdAt,
     };
+  }
+
+  async patchPost(patchPostDto: PatchPostDto) {
+    const { id, ...updatedData } = patchPostDto;
+
+    const post = await this.postRepository.findOneBy({ id });
+
+    if (!post) {
+      throw new NotFoundException(`Post with ID ${id} not found`);
+    }
+
+    Object.assign(post, updatedData);
+    await this.postRepository.save(post);
+
+    return post;
   }
 }

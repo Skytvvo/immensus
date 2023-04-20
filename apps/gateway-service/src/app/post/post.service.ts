@@ -9,6 +9,7 @@ import {
   IActiveUserData,
   GetPostDto,
   GetPostsDto,
+  PatchPostDto,
 } from '@immensus/data-access-services';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
@@ -53,5 +54,9 @@ export class PostService implements OnModuleInit {
 
   async getPosts(getPostsDto: GetPostsDto) {
     return this.postRpcService.GetPosts(getPostsDto);
+  }
+
+  async patchPost(patchPostDto: PatchPostDto) {
+    return this.postRpcService.PatchPost(patchPostDto);
   }
 }

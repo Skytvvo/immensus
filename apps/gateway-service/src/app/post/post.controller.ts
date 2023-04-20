@@ -1,9 +1,9 @@
 import {
   Body,
-  Controller, Get, Param, Post, Query, Req,
+  Controller, Get, Param, Patch, Post, Query, Req,
 } from '@nestjs/common';
 import {
-  AuthType, CreatePostDto,
+  AuthType, CreatePostDto, PatchPostDto,
 } from '@immensus/data-access-services';
 import { Request } from 'express';
 import { Auth } from '../../decorators/auth.decorator';
@@ -30,5 +30,13 @@ export class PostController {
     @Query('cursor') cursor?: string,
   ) {
     return this.postService.getPosts({ cursor, pageSize });
+  }
+
+  @Patch(':id')
+  async patchPost(@Param('id') id: string, @Body() patchPostDto: Omit<PatchPostDto, 'id'>) {
+    return this.postService.patchPost({
+      id,
+      ...patchPostDto,
+    });
   }
 }
