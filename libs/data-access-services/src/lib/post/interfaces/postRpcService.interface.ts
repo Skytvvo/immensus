@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { CreatePostDto, GetPostDto, GetPostsDto, PatchPostDto } from "../dto";
+import { CreatePostDto, DeletePostDto, GetPostDto, GetPostsDto, PatchPostDto } from "../dto";
 import { Post } from "../entities";
 
 export interface IPostRpcService{
@@ -7,4 +7,5 @@ export interface IPostRpcService{
   GetPost(getPostDto: GetPostDto): Observable<Post>;
   GetPosts(getPostsDto: GetPostsDto): Observable<Post>;
   PatchPost(patchPostDto: PatchPostDto): Observable<Post>
+  DeletePost(deletePostDto: DeletePostDto): Observable<undefined>
 }

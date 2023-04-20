@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 
 import { GrpcMethod } from '@nestjs/microservices';
 import {
-  CreatePostDto, GetPostDto, GetPostsDto, PatchPostDto, POST_SERVICE_NAME,
+  CreatePostDto, DeletePostDto, GetPostDto, GetPostsDto, PatchPostDto, POST_SERVICE_NAME,
 } from '@immensus/data-access-services';
 import { PostService } from './post.service';
 
@@ -28,5 +28,10 @@ export class PostController {
   @GrpcMethod(POST_SERVICE_NAME, 'PatchPost')
   patchPost(patchPostDto: PatchPostDto) {
     return this.appService.patchPost(patchPostDto);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'DeletePost')
+  deletePost(deletePostDto: DeletePostDto) {
+    return this.appService.deletePost(deletePostDto);
   }
 }
