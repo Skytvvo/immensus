@@ -8,6 +8,7 @@ package post;
 service PostService {
   rpc CreatePost (CratePostDto) returns (google.protobuf.Empty);
   rpc GetPost (GetPostDto) returns (GetPostResponseDto);
+  rpc GetPosts (GetPostsDto) returns (GetPostsResponseDto);
 }
 
 message CratePostDto {
@@ -37,3 +38,14 @@ message User {
   optional string nickname = 3;
   optional string email = 4;
 }
+
+message GetPostsDto {
+  string cursor = 1;
+  int32 pageSize = 2;
+}
+
+message GetPostsResponseDto {
+  repeated GetPostResponseDto posts = 1;
+  string cursor = 2;
+}
+

@@ -1,6 +1,9 @@
-import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import {
-  CreatePostDto, GetPostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig,
+  Injectable, NotFoundException, OnModuleInit,
+} from '@nestjs/common';
+import {
+  CreatePostDto,
+  GetPostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig, GetPostsDto,
 } from '@immensus/data-access-services';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -45,5 +48,26 @@ export class PostService implements OnModuleInit {
     }
 
     return post;
+  }
+
+  async getPosts(getPostsDto: GetPostsDto) {
+    const { pageSize, cursor } = getPostsDto;
+
+    const qb = await this.postRepository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.author', 'user')
+      .orderBy('post.createdAt', 'DESC')
+      .take(pageSize + 1);
+
+    if (cursor) qb.where('post.createdAt <  :cursor', { cursor: new Date(cursor) });
+    const posts = await qb.getMany();
+
+    const hasNextPage = posts.length > pageSize;
+    if (hasNextPage) posts.pop();
+
+    return {
+      posts,
+      cursor: posts[pageSize - 1]?.createdAt,
+    };
   }
 }

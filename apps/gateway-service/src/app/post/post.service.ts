@@ -1,7 +1,14 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import {
-  IPostRpcService, POST_SERVICE_NAME, postConfig, CreatePostDto, jwtConfig, IActiveUserData, GetPostDto,
+  IPostRpcService,
+  POST_SERVICE_NAME,
+  postConfig,
+  CreatePostDto,
+  jwtConfig,
+  IActiveUserData,
+  GetPostDto,
+  GetPostsDto,
 } from '@immensus/data-access-services';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
@@ -41,7 +48,10 @@ export class PostService implements OnModuleInit {
   }
 
   async getPost(getPostDto: GetPostDto) {
-    console.log(getPostDto)
     return this.postRpcService.GetPost(getPostDto);
+  }
+
+  async getPosts(getPostsDto: GetPostsDto) {
+    return this.postRpcService.GetPosts(getPostsDto);
   }
 }
