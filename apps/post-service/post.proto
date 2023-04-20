@@ -10,6 +10,7 @@ service PostService {
   rpc GetPost (GetPostDto) returns (GetPostResponseDto);
   rpc GetPosts (GetPostsDto) returns (GetPostsResponseDto);
   rpc PatchPost (PatchPostDto) returns (GetPostResponseDto);
+  rpc DeletePost (GetPostDto) returns (google.protobuf.Empty);
 }
 
 message CratePostDto {

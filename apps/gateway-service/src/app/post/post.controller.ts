@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller, Get, Param, Patch, Post, Query, Req,
+  Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Req,
 } from '@nestjs/common';
 import {
   AuthType, CreatePostDto, PatchPostDto,
@@ -38,5 +38,11 @@ export class PostController {
       id,
       ...patchPostDto,
     });
+  }
+
+  @HttpCode(204)
+  @Delete(':id')
+  async deletePost(@Param('id') id: string) {
+    return this.postService.deletePost({ id });
   }
 }

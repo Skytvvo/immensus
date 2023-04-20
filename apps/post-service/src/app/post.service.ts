@@ -3,7 +3,14 @@ import {
 } from '@nestjs/common';
 import {
   CreatePostDto,
-  GetPostDto, IProfileService, Post, PROFILE_SERVICE_NAME, profileConfig, GetPostsDto, PatchPostDto,
+  GetPostDto,
+  IProfileService,
+  Post,
+  PROFILE_SERVICE_NAME,
+  profileConfig,
+  GetPostsDto,
+  PatchPostDto,
+  DeletePostDto,
 } from '@immensus/data-access-services';
 import { Client, ClientGrpc, ClientOptions } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -84,5 +91,16 @@ export class PostService implements OnModuleInit {
     await this.postRepository.save(post);
 
     return post;
+  }
+
+  async deletePost(deletePostDto: DeletePostDto) {
+    const { id } = deletePostDto;
+    const post = await this.postRepository.findOneBy({ id });
+
+    if (!post) {
+      throw new NotFoundException(`Post with ID ${id} not found`);
+    }
+
+    await this.postRepository.remove(post);
   }
 }
