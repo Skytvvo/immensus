@@ -1,7 +1,9 @@
 import { Controller } from '@nestjs/common';
 
 import { GrpcMethod } from '@nestjs/microservices';
-import { CreatePostDto, GetPostDto, POST_SERVICE_NAME } from '@immensus/data-access-services';
+import {
+  CreatePostDto, GetPostDto, GetPostsDto, POST_SERVICE_NAME,
+} from '@immensus/data-access-services';
 import { PostService } from './post.service';
 
 @Controller()
@@ -16,5 +18,10 @@ export class PostController {
   @GrpcMethod(POST_SERVICE_NAME, 'GetPost')
   getPost(getPostDto: GetPostDto) {
     return this.appService.getPost(getPostDto);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'GetPosts')
+  getPosts(getPostsDto: GetPostsDto) {
+    return this.appService.getPosts(getPostsDto);
   }
 }

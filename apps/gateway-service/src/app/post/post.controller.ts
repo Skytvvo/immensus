@@ -1,9 +1,9 @@
 import {
   Body,
-  Controller, Get, Post, Query, Req,
+  Controller, Get, Param, Post, Query, Req,
 } from '@nestjs/common';
 import {
-  AuthType, CreatePostDto, GetPostDto,
+  AuthType, CreatePostDto,
 } from '@immensus/data-access-services';
 import { Request } from 'express';
 import { Auth } from '../../decorators/auth.decorator';
@@ -19,8 +19,16 @@ export class PostController {
     return this.postService.createPost(createPostDto, req.cookies);
   }
 
+  @Get(':id')
+  async getPost(@Param('id') id: string) {
+    return this.postService.getPost({ id });
+  }
+
   @Get()
-  async getPost(@Query() getPostDto: GetPostDto) {
-    return this.postService.getPost(getPostDto);
+  async getPosts(
+    @Query('pageSize') pageSize: number,
+    @Query('cursor') cursor?: string,
+  ) {
+    return this.postService.getPosts({ cursor, pageSize });
   }
 }
