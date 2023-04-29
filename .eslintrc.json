@@ -1,14 +1,14 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "@typescript-eslint"],
+  "plugins": ["@nx", "@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "extends": ["eslint:recommended"],
+      "extends": ["prettier", "airbnb", "../../.eslintrc.json"],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -26,7 +26,7 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": [
-        "plugin:@nrwl/nx/typescript",
+        "plugin:@nx/typescript",
         "plugin:@typescript-eslint/recommended"
       ],
       "rules": {
@@ -38,7 +38,7 @@
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nx/javascript"],
       "rules": {
         "no-param-reassign": "off"
       }
@@ -52,5 +52,6 @@
         "import/no-extraneous-dependencies": "off"
       }
     }
-  ]
+  ],
+  "extends": [null, "plugin:storybook/recommended"]
 }

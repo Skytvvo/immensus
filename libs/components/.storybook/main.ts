@@ -1,14 +1,23 @@
-import type { StorybookConfig } from '@storybook/core-common';
-
+import type { StorybookConfig } from '@storybook/react-webpack5';
 const config: StorybookConfig = {
-  core: { builder: 'webpack5' },
+  core: {},
   stories: [
     '../src/lib/**/*.stories.mdx',
     '../src/lib/**/*.stories.@(js|jsx|ts|tsx)',
   ],
-  addons: ['@storybook/addon-essentials', '@nrwl/react/plugins/storybook'],
+  addons: [
+    '@storybook/addon-essentials',
+    '@nx/react/plugins/storybook',
+    '@storybook/addon-mdx-gfm',
+  ],
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
+  },
+  docs: {
+    autodocs: true,
+  },
 };
-
 module.exports = config;
 
 // To customize your webpack configuration you can use the webpackFinal field.
