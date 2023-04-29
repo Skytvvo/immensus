@@ -3,7 +3,7 @@ const path = require('path');
 
 const app = express();
 
-const port = process.env.PORT_CLIENT || 3000;
+const port = process.env.PORT_BLOG_APP || 3000;
 const staticFilesPath = path.join(__dirname, 'dist');
 
 app.use(express.static(staticFilesPath));

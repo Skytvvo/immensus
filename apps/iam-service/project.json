@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
@@ -24,7 +24,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/js:node",
+      "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "iam-service:build"
@@ -42,14 +42,14 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/iam-service/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/iam-service/jest.config.ts",
@@ -66,7 +66,9 @@
       "dependsOn": ["build"],
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["docker build -f apps/iam-service/Dockerfile -t skytvvo/immensus-iam-service ."]
+        "commands": [
+          "docker build -f apps/iam-service/Dockerfile -t skytvvo/immensus-iam-service ."
+        ]
       }
     },
     "docker-push": {
@@ -77,10 +79,8 @@
       }
     },
     "repl": {
-      "executor": "@nrwl/webpack:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "target": "node",
         "compiler": "tsc",
